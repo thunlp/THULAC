@@ -7,6 +7,7 @@
 * [词性解释](#词性解释)
 * [THULAC模型介绍](#THULAC模型介绍)
 * [注意事项](#注意事项)
+* [其他语言实现](#其他语言实现)
 * [历史](#历史)
 * [开源协议](#开源协议)
 * [相关论文](#相关论文)
@@ -129,6 +130,14 @@ CNKI_journal.txt（51 MB）
 ##注意事项
 
 该工具目前仅处理UTF8编码中文文本，之后会逐渐增加支持其他编码的功能，敬请期待。
+
+##其他语言实现
+
+###THULAC（Java版）
+[https://github.com/thunlp/THULAC-Java](https://github.com/thunlp/THULAC-Java)
+
+###THULAC（Python版）
+[https://github.com/thunlp/THULAC-Python](https://github.com/thunlp/THULAC-Python)
 
 ##历史
 
