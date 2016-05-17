@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # THULAC：一个高效的中文词法分析工具包
 ##目录
 * [项目介绍](#项目介绍)
@@ -109,10 +108,6 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 ####2.4.使用训练出的模型
 将训练出来的模型覆盖原来models中的对应模型，之后执行分词程序即可使用训练出来的模型。
 
-###3.获取模型
-
-获取已经训练好的THULAC模型，请登录thulac.thunlp.org网站填写个人信息进行下载。
-
 ##代表分词软件的性能对比
 我们选择LTP、ICTCLAS、结巴分词等国内代表分词软件与THULAC做性能比较。我们选择Windows作为测试环境，根据第二届国际汉语分词测评发布的国际中文分词测评标准，对不同软件进行了速度和准确率测试。
 
@@ -195,7 +190,3 @@ THULAC | 42.625s  | 1221.05KB/s
 ##作者
 
 Maosong Sun （孙茂松，导师）,  Xinxiong Chen（陈新雄，博士生）,  Kaixu Zhang (张开旭，硕士生）,  Zhipeng Guo（郭志芃，本科生）,  Zhiyuan Liu（刘知远，助理教授）.
-=======
-# THULAC
-THULAC（C++版）
->>>>>>> 120fe8035069e2f46bba25fdd864cfddab495517
