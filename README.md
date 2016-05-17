@@ -27,14 +27,6 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 		make
 		会在当前目录下得到thulac和train_c
 		
-* java版
-
-		可直接按照分词程序命令格式运行可执行的jar包
-		
-* python版
-		
-		将thulac放到目录下，通过 import thulac 来引用
-		
 ##使用方式
 ###1.分词和词性标注程序
 ####1.1.命令格式
@@ -42,28 +34,6 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 	* ./thulac [-t2s] [-seg_only] [-deli delimeter] [-user userword.txt]   从命令行输入输出
 	* ./thulac [-t2s] [-seg_only] [-deli delimeter] [-user userword.txt] <inputfile >outputfile   利用重定向从文本文件输入输出（注意均为UTF8文本）
 	
-* java版
-
-	* java -jar THULAC_lite_java_run.jar [-t2s] [-seg_only] [-deli delimeter] [-user userword.txt]   从命令行输入输出
-	* java -jar THULAC_lite_java_run.jar [-t2s] [-seg_only] [-deli delimeter] [-user userword.txt] -input input_file -output output_file   从文本文件输入输出（注意均为UTF8文本）
-	
-* python版
-	
-	通过python程序`import thulac`，新建`thulac(args)`类，其中args为程序的参数。之后可以通过调用`thulac.run()`运行分词和词性标注程序；也可以通过调用`thulac.cut()`进行单句分词。
-	
-	代码示例
-		
-		import thulac
-		
-		thu1 = thulac.thulac("-seg_only")  #设置模式为行分词模式
-		thu1.run() #根据参数运行分词程序，从屏幕输入输出
-		print " ".join(thu1.cut("我爱北京天安门")) #进行一句话分词
-		#	==============================================
-		thu2 = thulac.thulac("-input cs.txt") #设置模式为分词和词性标注模式
-		thu2.run() #根据参数运行分词和词性标注程序，从cs.txt文件中读入，屏幕输出结果
-		print " ".join(thu2.cut("我爱北京天安门")) #进行一句话分词和词性标注
-		
-
 ####1.2.通用参数
 	-t2s			    将句子从繁体转化为简体
 	-seg_only		    只进行分词，不进行词性标注
@@ -71,12 +41,6 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 	-filter				使用过滤器去除一些没有意义的词语，例如“可以”。
 	-user userword.txt	设置用户词典，用户词典中的词会被打上uw标签。词典中每一个词一行，UTF8编码(python版暂无)
 	-model_dir dir		设置模型文件所在文件夹，默认为models/
-	
-####1.3.Java版，python版特有的参数
-
-	-input input_file	设置从文件读入，默认为命令行输入
-	-output output_file	设置输出到文件中，默认为命令行输出
-
 
 ###2.模型训练程序
 模型训练程序train_c是THULAC分词模型的训练程序，用户可以使用train_c训练获得THULAC的分词模型。
@@ -108,6 +72,9 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 ####2.4.使用训练出的模型
 将训练出来的模型覆盖原来models中的对应模型，之后执行分词程序即可使用训练出来的模型。
 
+###3.获取模型
+获取已经训练好的THULAC模型，请登录[thulac.thunlp.org](thulac.thunlp.org)网站填写个人信息进行下载。
+
 ##代表分词软件的性能对比
 我们选择LTP、ICTCLAS、结巴分词等国内代表分词软件与THULAC做性能比较。我们选择Windows作为测试环境，根据第二届国际汉语分词测评发布的国际中文分词测评标准，对不同软件进行了速度和准确率测试。
 
@@ -117,32 +84,32 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 
 msr_test（560KB）
 
-Algorithm | Time| Precision | Recall
-:------------ | ------------- :| ------------ :| -------:
-LTP-3.2.0 | 3.21s  | 0.867 | 0.896
-ICTCLAS(2015版) | 0.55s | 0.869 | 0.914
-jieba|0.26s|0.814|0.809
-THULAC | 0.62s  | 0.877 | 0.899
+|Algorithm | Time| Precision | Recall|
+|:------------ | ------------- :| ------------ :| -------:|
+|LTP-3.2.0 | 3.21s  | 0.867 | 0.896|
+|ICTCLAS(2015版) | 0.55s | 0.869 | 0.914|
+|jieba|0.26s|0.814|0.809|
+|THULAC | 0.62s  | 0.877 | 0.899|
 
 pku_test（510KB）
 
-Algorithm | Time| Precision | Recall
-:------------ | ------------- :| ------------: | -------:
-LTP-3.2.0 | 3.83s  | 0.960 | 0.947
-ICTCLAS(2015版) | 0.53s | 0.939 | 0.944
-jieba|0.23s|0.850|0.784
-THULAC | 0.51s  | 0.944 | 0.908
+|Algorithm | Time| Precision | Recall|
+|:------------ | ------------- :| ------------: | -------:|
+|LTP-3.2.0 | 3.83s  | 0.960 | 0.947|
+|ICTCLAS(2015版) | 0.53s | 0.939 | 0.944|
+|jieba|0.23s|0.850|0.784|
+|THULAC | 0.51s  | 0.944 | 0.908|
 
 除了以上在标准测试集上的评测，我们也对各个分词工具在大数据上的速度进行了评测，结果如下：
 
 CNKI_journal.txt（51 MB）
 
-Algorithm | Time | Speed
-:------------ | ------------- :| ------------:
-LTP-3.2.0 | 348.624s  | 149.80KB/s
-ICTCLAS(2015版) | 106.461s | 490.59KB/s
-jieba|22.5583s|2314.89KB/s
-THULAC | 42.625s  | 1221.05KB/s
+|Algorithm | Time | Speed|
+|:------------ | ------------- :| ------------:|
+|LTP-3.2.0 | 348.624s  | 149.80KB/s|
+|ICTCLAS(2015版) | 106.461s | 490.59KB/s|
+|jieba|22.5583s|2314.89KB/s|
+|THULAC | 42.625s  | 1221.05KB/s|
 
 ##词性解释
 	a/形容词 c/连词 d/副词 e/语气词 f/方位词 g/助词
@@ -165,11 +132,11 @@ THULAC | 42.625s  | 1221.05KB/s
 
 ##历史
 
-更新时间 | 更新内容|
-:------------ | :------------- :| 
-2016-03-31| 增加THULAC分词python版本。
-2016-01-20| 增加THULAC分词Java版本。
-2016-01-10| 开源THULAC分词工具C++版本。
+|更新时间 | 更新内容|
+|:------------ | :------------- :| 
+|2016-03-31| 增加THULAC分词python版本。|
+|2016-01-20| 增加THULAC分词Java版本。|
+|2016-01-10| 开源THULAC分词工具C++版本。|
 
 
 ##开源协议
