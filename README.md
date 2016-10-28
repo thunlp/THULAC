@@ -42,6 +42,10 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 	-filter				使用过滤器去除一些没有意义的词语，例如“可以”。
 	-user userword.txt	设置用户词典，用户词典中的词会被打上uw标签。词典中每一个词一行，UTF8编码(python版暂无)
 	-model_dir dir		设置模型文件所在文件夹，默认为models/
+	
+####1.3.分词和词性标注模型的使用
+
+THULAC需要分词和词性标注模型的支持，用户可以登录[thulac.thunlp.org](http://thulac.thunlp.org)网站填写个人信息进行下载，并放到THULAC的根目录即可，或者使用参数`-model_dir dir`指定模型的位置。
 
 ###2.模型训练程序
 模型训练程序train_c是THULAC分词模型的训练程序，用户可以使用train_c训练获得THULAC的分词模型。
