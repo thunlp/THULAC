@@ -48,6 +48,10 @@ public:
         if(bi_bases)delete[] bi_bases;
     };
 
+    void UpdateModel(permm::Model* model) {
+        this->model = model;
+    }
+
     inline void feature_generation(RawSentence& seq,
                 Indexer<RawSentence>& indexer,
                 Counter<Word>* bigram_counter=NULL){

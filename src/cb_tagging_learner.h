@@ -249,6 +249,7 @@ void TaggingLearner::train(const char*training_file,
     //this->model=new permm::Model(model_file,false);
     this->model=new permm::Model(model_file);
     this->model->reset_ave_weights();
+    this->ngram_feature->UpdateModel(this->model);
     fprintf(stderr,"decoder initialized\n");
     
     //learning !!!
