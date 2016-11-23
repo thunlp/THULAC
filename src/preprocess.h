@@ -57,13 +57,13 @@ public:
 		// singlePun correspond to (see otherSet)
 		int singlePun[] = {65292, 12290, 65311, 65281, 65306, 65307, 8216, 8217, 8220, 8221, 1230, 12304, 
 							12305, 12289, 12298, 12299, 64,35, 65288, 65289, 34, 91, 93, 126, 47, 44, 58,
-							63, 9700, 9734, 9733, 8230, 39, 33, 42, 43, 62, 40, 41, 59};
+							63, 9700, 9734, 9733, 8230, 39, 33, 42, 43, 62, 40, 41, 59, 61};
 		len = sizeof(singlePun) / sizeof(int);
 		for(int i = 0 ; i < len; i ++){
 			singlePunSet.insert(singlePun[i]);
 		}
 
-		char httpChar[] = {'/', '.', ':', '#', '"', '_', '-', '=', '+', '&', '$', ';'};
+		char httpChar[] = {'/', '.', ':', '#', '"', '_', '-', '=', '+', '&', '$', ';', '?'};
 		len = sizeof(httpChar) / sizeof(char);
 		for(int i = 0; i < len; i ++){
 			httpSet.insert((int)httpChar[i]);
@@ -237,24 +237,24 @@ public:
 				hasOther = false;
 			}
 
-			if(isHttp(c)){
-				if(!hasHttp){
-					if(c == 'h'){
-						httpStart = graph.size() - 1;
-						tmpRaw.clear();
-						tmpRaw.push_back(c);
-						hasHttp = true;
-					}
-				}else{
-					tmpRaw.push_back(c);
-				}
-			}else{
-				if(hasHttp){
-					httpVec.push_back(tmpRaw);
-					httpStartVec.push_back(httpStart);
-					hasHttp = false;
-				}
-			}
+			// if(isHttp(c)){
+			// 	if(!hasHttp){
+			// 		if(c == 'h'){
+			// 			httpStart = graph.size() - 1;
+			// 			tmpRaw.clear();
+			// 			tmpRaw.push_back(c);
+			// 			hasHttp = true;
+			// 		}
+			// 	}else{
+			// 		tmpRaw.push_back(c);
+			// 	}
+			// }else{
+			// 	if(hasHttp){
+			// 		httpVec.push_back(tmpRaw);
+			// 		httpStartVec.push_back(httpStart);
+			// 		hasHttp = false;
+			// 	}
+			// }
 
 			// if(c == 64){
 			// 	if(hasAt){
@@ -277,35 +277,36 @@ public:
 				titleRaw.push_back(c);
 			}
 		}
-		if(tmpRaw.size() != 0){
-			httpVec.push_back(tmpRaw);
-			httpStartVec.push_back(httpStart);
-		}
+		// if(tmpRaw.size() != 0){
+		// 	httpVec.push_back(tmpRaw);
+		// 	httpStartVec.push_back(httpStart);
+		// }
 		// if(npRaw.size() != 0){
 		// 	npVec.push_back(npRaw);
 		// 	npStartVec.push_back(npStart);
 		// }
 
-		std::ostringstream ost;
-		std::string str;
-		for(int i = 0 ; i < httpVec.size(); i ++){
-			ost.str("");
-			ost<<httpVec[i];
-			str = ost.str();
-			std::size_t found = str.find("http");
-			if(found != std::string::npos){
-				int start = httpStartVec[i];
-				int size = str.size();
-				//std::cout<<std::endl<<sentence<<":Here:"<<str<<":"<<start<<":"<<size<<":"<<graph.size()<<std::endl;
+		// std::ostringstream ost;
+		// std::string str;
+		// for(int i = 0 ; i < httpVec.size(); i ++){
+		// 	ost.str("");
+		// 	ost<<httpVec[i];
+		// 	str = ost.str();
+		// 	std::cout << "====\n" << str << std::endl;
+		// 	std::size_t found = str.find("http");
+		// 	if(found != std::string::npos){
+		// 		int start = httpStartVec[i];
+		// 		int size = str.size();
 				
-				graph[start] = 1;
-				for(int j = start + 1; j < start + size - 1; j ++){
-					graph[j] = 2;
-				}
-				graph[start + size - 1] = 4;
 				
-			}
-		}
+		// 		graph[start] = 1;
+		// 		for(int j = start + 1; j < start + size - 1; j ++){
+		// 			graph[j] = 2;
+		// 		}
+		// 		graph[start + size - 1] = 4;
+				
+		// 	}
+		// }
 
 		// for(int i = 0; i < npVec.size(); i ++){
 		// 	npRaw = npVec[i];
