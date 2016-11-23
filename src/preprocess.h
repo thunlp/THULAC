@@ -57,7 +57,7 @@ public:
 		// singlePun correspond to (see otherSet)
 		int singlePun[] = {65292, 12290, 65311, 65281, 65306, 65307, 8216, 8217, 8220, 8221, 1230, 12304, 
 							12305, 12289, 12298, 12299, 64,35, 65288, 65289, 34, 91, 93, 126, 47, 44, 58,
-							63, 9700, 9734, 9733, 8230, 39, 33, 42, 43, 62, 40, 41};
+							63, 9700, 9734, 9733, 8230, 39, 33, 42, 43, 62, 40, 41, 59};
 		len = sizeof(singlePun) / sizeof(int);
 		for(int i = 0 ; i < len; i ++){
 			singlePunSet.insert(singlePun[i]);
@@ -155,11 +155,11 @@ public:
                     hasSpace=true;
                 }
 
-				if(hasAt){
-					npVec.push_back(npRaw);
-					npStartVec.push_back(npStart);
-					hasAt = false;
-				}
+				// if(hasAt){
+				// 	npVec.push_back(npRaw);
+				// 	npStartVec.push_back(npStart);
+				// 	hasAt = false;
+				// }
             }else if(isOther(c)){
 				if(hasSpace){
 					senClean.push_back(c);
@@ -200,13 +200,13 @@ public:
 						hasSinglePun = false;
 					}
 				}
-				if(c == 41 || c == 65289){
-					if(hasAt){
-						npVec.push_back(npRaw);
-						npStartVec.push_back(npStart);
-						hasAt = false;
-					}
-				}
+				// if(c == 41 || c == 65289){
+				// 	if(hasAt){
+				// 		npVec.push_back(npRaw);
+				// 		npStartVec.push_back(npStart);
+				// 		hasAt = false;
+				// 	}
+				// }
 				if(c == 12299){
 					if(hasTitle){
 						titleVec.push_back(titleRaw);
@@ -256,18 +256,18 @@ public:
 				}
 			}
 
-			if(c == 64){
-				if(hasAt){
-					npVec.push_back(npRaw);
-					npStartVec.push_back(npStart);
-					npRaw.clear();
-				}
-				hasAt = true;
-				npStart = graph.size();
-				npRaw.clear();
-			}else if(hasAt){
-				npRaw.push_back(c);
-			}
+			// if(c == 64){
+			// 	if(hasAt){
+			// 		npVec.push_back(npRaw);
+			// 		npStartVec.push_back(npStart);
+			// 		npRaw.clear();
+			// 	}
+			// 	hasAt = true;
+			// 	npStart = graph.size();
+			// 	npRaw.clear();
+			// }else if(hasAt){
+			// 	npRaw.push_back(c);
+			// }
 
 			if(c == 12298){
 				hasTitle = true;
@@ -281,10 +281,10 @@ public:
 			httpVec.push_back(tmpRaw);
 			httpStartVec.push_back(httpStart);
 		}
-		if(npRaw.size() != 0){
-			npVec.push_back(npRaw);
-			npStartVec.push_back(npStart);
-		}
+		// if(npRaw.size() != 0){
+		// 	npVec.push_back(npRaw);
+		// 	npStartVec.push_back(npStart);
+		// }
 
 		std::ostringstream ost;
 		std::string str;
@@ -307,20 +307,20 @@ public:
 			}
 		}
 
-		for(int i = 0; i < npVec.size(); i ++){
-			npRaw = npVec[i];
-			if(npRaw.size() > 0 && npRaw.size() < 15){
-				int start = npStartVec[i];
-				int size = npRaw.size();
+		// for(int i = 0; i < npVec.size(); i ++){
+		// 	npRaw = npVec[i];
+		// 	if(npRaw.size() > 0 && npRaw.size() < 15){
+		// 		int start = npStartVec[i];
+		// 		int size = npRaw.size();
 				
-				graph[start] = 1;
-				for(int j = start + 1; j < start + size - 1; j ++){
-					graph[j] = 2;
-				}
-				graph[start + size - 1] = 4;
+		// 		graph[start] = 1;
+		// 		for(int j = start + 1; j < start + size - 1; j ++){
+		// 			graph[j] = 2;
+		// 		}
+		// 		graph[start + size - 1] = 4;
 				
-			}
-		}
+		// 	}
+		// }
 
 		for(int i = 0; i < titleVec.size(); i ++){
 			titleRaw = titleVec[i];
