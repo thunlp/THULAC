@@ -153,6 +153,7 @@ public:
                         graph.back()&=12;
                     }
                     hasSpace=true;
+                    continue;
                 }
 
 				// if(hasAt){
