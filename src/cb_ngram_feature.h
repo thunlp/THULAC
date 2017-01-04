@@ -38,7 +38,7 @@ public:
         this->dat=dat->dat;
         this->dat_size=dat->dat_size;
         this->model=model;
-        max_length=10000;
+        max_length=50000;
         this->uni_bases=new int[this->max_length+2];
         this->bi_bases=new int[this->max_length+4];
         this->values=values;

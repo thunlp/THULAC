@@ -130,8 +130,10 @@ public:
 						sentence[i] += sentence[i+1];
 						sentence.erase(sentence.begin() + i + 1);
 					}
+					else {
+						hasTimeWord = false;
+					}
 				}
-				hasTimeWord = false;
 			}
 		}
 
@@ -179,8 +181,10 @@ public:
 						sentence.erase(sentence.begin() + i + 1);
 						sentence[i].tag = "t";
 					}
+					else {
+						hasTimeWord = false;
+					}
 				}
-				hasTimeWord = false;
 			}
 		}
 		
@@ -226,8 +230,10 @@ public:
 						sentence.erase(sentence.begin() + i + 1);
 						sentence[i].tag = "t";
 					}
+					else {
+						hasTimeWord = false;
+					}
 				}
-				hasTimeWord = false;
 			}
 		}
 

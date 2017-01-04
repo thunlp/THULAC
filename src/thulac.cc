@@ -34,6 +34,7 @@ int main (int argc,char **argv) {
     bool seg_only = false;
     bool useFilter = false;
     bool use_second = false;
+    int max_length = 50000;
 
     int c = 1;
     while(c < argc){
@@ -164,62 +165,67 @@ int main (int argc,char **argv) {
     std::vector<thulac::RawSentence> vec;
     while(1){
         rtn=thulac::get_raw(oiraw);//读入生句子
-        // std::cout << oiraw << std::endl;
-        
-        if(useT2S) {
-            preprocesser->clean(oiraw,traw,poc_cands);
-            preprocesser->T2S(traw, raw);
+        if(oiraw.size() > max_length) {
+            thulac::cut_raw(oiraw, vec, max_length);    
         }
         else {
-            preprocesser -> clean(oiraw,raw,poc_cands);
+            vec.clear();
+            vec.push_back(oiraw);
         }
-        if(raw.size()){
-        
-            if(!seg_only) {
-                tagging_decoder->segment(raw,poc_cands,tagged);
-            
-            //后处理
-                ns_dict->adjust(tagged);
-                idiom_dict->adjust(tagged);
-
-                if(user_dict){
-                    user_dict->adjust(tagged);
-                }
-
-                punctuation->adjust(tagged);
-                timeword->adjustDouble(tagged);
-                negword->adjust(tagged);
-                if(useFilter){
-                    filter->adjust(tagged);
-                }
-
-          //  输出
-                std::cout<<tagged;//输出
+        for(int vec_num = 0; vec_num < vec.size(); vec_num++) {
+            if(useT2S) {
+                preprocesser->clean(vec[vec_num],traw,poc_cands);
+                preprocesser->T2S(traw, raw);
             }
             else {
+                preprocesser -> clean(vec[vec_num],raw,poc_cands);
+            }
+            if(raw.size()){
+            
+                if(!seg_only) {
+                    tagging_decoder->segment(raw,poc_cands,tagged);
+                
+                //后处理
+                    ns_dict->adjust(tagged);
+                    idiom_dict->adjust(tagged);
+                    punctuation->adjust(tagged);
+                    timeword->adjustDouble(tagged);
+                    negword->adjust(tagged);
+                    if(user_dict){
+                        user_dict->adjust(tagged);
+                    }
+                    if(useFilter){
+                        filter->adjust(tagged);
+                    }
 
-                cws_decoder->segment(raw, poc_cands, tagged);
-                cws_decoder->get_seg_result(segged);
-                ns_dict->adjust(segged);
-                idiom_dict->adjust(segged);
-
-                if(user_dict){
-                    user_dict->adjust(segged);
+                    if(vec_num != 0) std::cout << " ";//  输出
+                    std::cout<<tagged;//输出
                 }
+                else {
 
-                punctuation->adjust(segged);
-                timeword->adjust(segged);
-                negword->adjust(segged);
-                if(useFilter){
-                    filter->adjust(segged);
-                }
-                for(int j = 0; j < segged.size(); j++){
-                    if(j!=0) std::cout<<" ";
-                    std::cout<<segged[j];
+                    cws_decoder->segment(raw, poc_cands, tagged);
+                    cws_decoder->get_seg_result(segged);
+                    ns_dict->adjust(segged);
+                    idiom_dict->adjust(segged);
+                    punctuation->adjust(segged);
+                    timeword->adjust(segged);
+                    negword->adjust(segged);
+                    if(user_dict){
+                        user_dict->adjust(segged);
+                    }
+                    if(useFilter){
+                        filter->adjust(segged);
+                    }
+                    if(vec_num != 0) std::cout << " ";
+                    for(int j = 0; j < segged.size(); j++){
+                        if(j!=0) std::cout<<" ";
+                        std::cout<<segged[j];
+                    }
+
                 }
             }
         }
-        if(rtn==-1)break;//如果到了文件末尾，退出
+        if(rtn==-1) break;//如果到了文件末尾，退出
         putchar(rtn);//否则打印结尾符号
         std::cout.flush();
         //并继续

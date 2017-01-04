@@ -200,16 +200,17 @@ inline int get_raw_vector(std::vector<Raw>& vec,FILE* pFile=stdin,int min_char=3
 	std::set<int>::iterator it;
 	//int punInts[] = {46,63,33,12290,65311,65281};
 	int punInts[] = {63,33,59,12290,65311,65281,65307};
-	for(int i = 0; i < 9; i ++){
+	for(int i = 0; i < 7; i ++){
 		pun_set.insert(punInts[i]);
 	}
     int current_character=-1;
     int c;
     while(1){//反复读取输入流
         c=fgetc(pFile);
-        std::cout << c;
+        // std::cout << c;
         if(c==EOF){
             if(current_character!=-1)sent.push_back(current_character);
+            if(sent.size()) vec.push_back(sent);
             return c;//end of file
         }
         if(!(c&0x80)){//1个byte的utf-8编码
@@ -233,8 +234,10 @@ inline int get_raw_vector(std::vector<Raw>& vec,FILE* pFile=stdin,int min_char=3
 				}
 			}
             if(c<min_char){//非打印字符及空格
-                //return c;
-                current_character=32;
+                if(sent.size()) vec.push_back(sent);
+                // break;
+                return c;
+                // current_character=32;
             }else{//一般ascii字符
                 current_character=c;//+65248;//半角转全角，放入缓存
             }
@@ -330,33 +333,63 @@ inline int get_raw_vector(std::vector<Raw>& vec,FILE* pFile=stdin,int min_char=3
         }
     }
     //if(current_character>0 && len != 9999)sent.push_back(current_character);
-	if(current_character > 0){
-        sent.push_back(current_character);
-        vec.push_back(sent);
-		sent.clear();
-    }else if(current_character > 0){
-        vec.push_back(sent);
-		sent.clear();
-	}
-    return -1;
-	/*
-	for(int i = 0; i < vec.size(); i ++){
-		std::cout<<"get_raw_vec:"<<vec[i]<<std::endl;
-	}
-
-	/*
-	int startIndex = 0;
-	int endIndex = 0;
-	Raw tmpRaw;
-	for(int i = 0; i < pun_vec.size(); i ++){
-		startIndex = (i == 0) ? 0 : pun_vec[i - 1];
-		endIndex = pun_vec[i];
-		if(endIndex > 1 )
-		std::cout<<"get_raw_vec:"<<pun_vec[i]<<std::endl;
-	}
-	*/
+ //    std::cout << sent << std::endl;
+	// if(current_character > 0){
+ //        sent.push_back(current_character);
+ //        vec.push_back(sent);
+	// 	sent.clear();
+ //    }else if(current_character > 0){
+ //        vec.push_back(sent);
+	// 	sent.clear();
+	// }
+    // return -1;
+	// for(int i = 0; i < vec.size(); i ++){
+		// std::cout<<"get_raw_vec:"<<vec[i]<<std::endl;
+	// }
+    // return c;
+	// int startIndex = 0;
+	// int endIndex = 0;
+	// Raw tmpRaw;
+	// for(int i = 0; i < pun_vec.size(); i ++){
+	// 	startIndex = (i == 0) ? 0 : pun_vec[i - 1];
+	// 	endIndex = pun_vec[i];
+	// 	if(endIndex > 1 )
+	// 	std::cout<<"get_raw_vec:"<<pun_vec[i]<<std::endl;
+	// }
     //if(!(c&0x80))sent.push_back(current_character);
     //return 0;
+}
+
+
+inline void cut_raw(Raw& sent, std::vector<Raw>& vec, int max_len){
+    vec.clear();
+    //std::vector<int> pun_vec;
+    Raw sent_tmp;
+    std::set<int> pun_set;
+    std::set<int>::iterator it;
+    //int punInts[] = {46,63,33,12290,65311,65281};
+    int punInts[] = {63,33,59,12290,65311,65281,65307};
+    for(int i = 0; i < 7; i ++){
+        pun_set.insert(punInts[i]);
+    }
+    int current_character=-1;
+    int c, num = 0, last_pun = 0;
+    sent_tmp.clear();
+    for(int i = 0; i < sent.size(); i++){//反复读取输入流
+        c = sent[i];
+        num++;
+        it = pun_set.find(c);
+        if(it != pun_set.end() || i == sent.size()-1) {
+            if(num > max_len) {
+                vec.push_back(sent_tmp);
+                sent_tmp.clear();
+                num = i - last_pun + 1;
+            }
+            for(int j = last_pun; j <= i; j++) sent_tmp.push_back(sent[j]);
+            last_pun = i+1;
+        }
+    }
+    if(sent_tmp.size()) vec.push_back(sent_tmp);
 }
 
 }//for thulac

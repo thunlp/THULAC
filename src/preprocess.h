@@ -228,7 +228,7 @@ public:
 						hasSinglePun = false;
 					}else{					
 						senClean.push_back(c);
-						graph.push_back(15);
+						graph.push_back(9);
 					}
 				}else{
 					senClean.push_back(c);
