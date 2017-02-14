@@ -329,7 +329,10 @@ public:
 			if(isPossibleTitle(titleRaw)){
 				int start = titleStartVec[i];
 				int size = titleRaw.size();
-
+                                if(size == 1) {
+					graph[start] = 9;
+					continue;
+				}
 				graph[start] = 1;
 				for(int j = start + 1; j < start + size - 1; j ++){
 					graph[j] = 2;
