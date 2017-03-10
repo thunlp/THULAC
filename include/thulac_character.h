@@ -4,7 +4,7 @@ namespace thulac{
 
 typedef int Character;
 
-inline int put_character(const Character c,FILE * pFile=stdout){
+inline void put_character(const Character c,FILE * pFile=stdout){
     if(c<128){//1个byte的utf-8
         fputc(c,pFile);
     }else if(c<0x800){//2个byte的utf-8
@@ -19,10 +19,10 @@ inline int put_character(const Character c,FILE * pFile=stdout){
         fputc(0x80|((c>>12)&0x3f),pFile);
         fputc(0x80|((c>>6)&0x3f),pFile);
         fputc(0x80|(c&0x3f),pFile);
-    };
-};
+    }
+}
 
-inline int put_character(const Character c,std::ostream& os){
+inline void put_character(const Character c,std::ostream& os){
     if(c<128){//1个byte的utf-8
         os<<(char)c;
     }else if(c<0x800){//2个byte的utf-8
@@ -37,8 +37,8 @@ inline int put_character(const Character c,std::ostream& os){
         os<<(char)(0x80|((c>>12)&0x3f));
         os<<(char)(0x80|((c>>6)&0x3f));
         os<<(char)(0x80|(c&0x3f));
-    };
-};
+    }
+}
 
 std::istream& operator>> (std::istream& is,Character& c){
     c=is.get();

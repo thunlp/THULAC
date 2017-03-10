@@ -212,8 +212,8 @@ void TaggingLearner::train(const char*training_file,
     //model_file
     int l_size=tag_indexer.list.size();
     int f_size=kv.size();
-    fprintf(stderr,"number of labels: %d\n",l_size);
-    fprintf(stderr,"number of features: %d\n",f_size);
+    printf("number of labels: %d\n",l_size);
+    printf("number of features: %d\n",f_size);
     permm::Model* model=new permm::Model(l_size,f_size);
     model->save(model_file);
     delete model;

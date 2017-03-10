@@ -49,7 +49,7 @@ public:
     };
 };
 
-inline int put_raw(const Raw& r,FILE * pFile=stdout){
+inline void put_raw(const Raw& r,FILE * pFile=stdout){
     for(size_t j=0;j<r.size();j++){
         put_character(r[j],pFile);
     }
@@ -154,17 +154,17 @@ inline int get_raw(Character* seq,int max_len,int&len,FILE* pFile=stdin,int min_
     }
 }
 
-inline void get_raw(Raw& sent,char* s,int len,int min_char=33){
+inline int get_raw(Raw& sent,const std::string& s,int len, int start, int min_char=33){
     sent.clear();
     int current_character=-1;
     int c;
-    for(int i = 0; i < len; i ++){//反复读取s
+    for(int i = start; i < len; i ++){//反复读取s
         c=s[i];
         if(!(c&0x80)){//1个byte的utf-8编码
             if(current_character!=-1)sent.push_back(current_character);
             if(c<min_char){//非打印字符及空格
-                //return c;
-                current_character=32;
+                return i;
+                // current_character=32;
             }else{//一般ascii字符
                 current_character=c;//+65248;//半角转全角，放入缓存
             }
@@ -184,9 +184,10 @@ inline void get_raw(Raw& sent,char* s,int len,int min_char=33){
             current_character=0;
         }
     }
-	if(current_character>0 && len != 9999){
+	if(current_character>0){
 		sent.push_back(current_character);
 	}
+    return -1;
     //if(!(c&0x80))sent.push_back(current_character);
     //return 0;
 }

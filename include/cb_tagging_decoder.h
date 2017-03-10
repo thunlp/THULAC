@@ -52,10 +52,6 @@ public:
     int**label_trans_pre;
     int**label_trans_post;
 
-    ///*后处理用*/
-    int threshold;
-    int* allow_com;
-
     ///*后处理用_ tagging*/
     int tag_size;//postag的个数
     int** label_looking_for;
@@ -117,10 +113,7 @@ TaggingDecoder::TaggingDecoder(){
     this->label_trans=NULL;
     label_trans_pre=NULL;
     label_trans_post=NULL;
-    this->threshold=0;
-    
-//    this->allow_sep=new int[this->max_length];
-    this->allow_com=new int[this->max_length];
+
     
     this->tag_size=0;
     //this->is_good_choice=NULL;
@@ -162,14 +155,11 @@ TaggingDecoder::~TaggingDecoder(){
     free(label_trans_pre);
     free(label_trans_post);
     
-//    delete[](allow_sep);
-    delete[](allow_com);
     
     if(model!=NULL)for(int i=0;i<model->l_size;i++){
         if(label_looking_for)delete[](label_looking_for[i]);
     };
     delete[](label_looking_for);
-    delete[](is_good_choice);
     
     if(pocs_to_tags){
         for(int i=1;i<16;i++){
@@ -454,6 +444,7 @@ int TaggingDecoder::segment(RawSentence& raw, POCGraph& graph, TaggedSentence& t
             //if((i+1)<len)putchar(' ');//在分词位置输出空格
         }
     }
+    return 1;
 }
 void TaggingDecoder::get_seg_result(SegmentedSentence& ss){
         ss.clear();

@@ -128,7 +128,7 @@ public:
         }
         return -1;
     }
-    int update(const Word& word,int value,int post=0){
+    void update(const Word& word,int value,int post=0){
         int base=match(word,post);
         if(base>=0){
             dat[base].base=value;

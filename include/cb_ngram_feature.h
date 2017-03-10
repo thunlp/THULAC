@@ -108,7 +108,7 @@ public:
             key.push_back(right);key.push_back(right2);key.push_back(SEPERATOR);key.push_back('4');
             indexer.get_index(key);
         }
-    };
+    }
 
     int put_values(int*sequence,int len){
         if(len>=this->max_length){
@@ -142,9 +142,10 @@ public:
             if((base=bi_bases[i+3])!=-1)
                 add_values(value_offset,base,52,NULL);
         }
+        return 0;
+    }
 
-    };
-    int update_weights(int*sequence,int len,int* results,int delta,long steps){
+    void update_weights(int*sequence,int len,int* results,int delta,long steps){
         find_bases(dat_size,SENTENCE_BOUNDARY,SENTENCE_BOUNDARY,uni_bases[0],bi_bases[0]);
         find_bases(dat_size,SENTENCE_BOUNDARY,sequence[0],uni_bases[0],bi_bases[1]);
         for(int i=0;i+1<len;i++)

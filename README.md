@@ -33,7 +33,7 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 ####1.1.命令格式
 * C++版
 	* ./thulac [-t2s] [-seg_only] [-deli delimeter] [-user userword.txt]   从命令行输入输出
-	* ./thulac [-t2s] [-seg_only] [-deli delimeter] [-user userword.txt] <inputfile >outputfile   利用重定向从文本文件输入输出（注意均为UTF8文本）
+	* ./thulac [-t2s] [-seg_only] [-deli delimeter] [-user userword.txt] [-intput inputfile] [-output outputfile] 从文本文件输入输出（注意均为UTF8文本）
 	
 ####1.2.通用参数
 	-t2s			    将句子从繁体转化为简体
@@ -42,8 +42,32 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 	-filter				使用过滤器去除一些没有意义的词语，例如“可以”。
 	-user userword.txt	设置用户词典，用户词典中的词会被打上uw标签。词典中每一个词一行，UTF8编码(python版暂无)
 	-model_dir dir		设置模型文件所在文件夹，默认为models/
+	-input inputfile	设置输入文件地址
+	-output outputfile	设置输出文件地址
 	
-####1.3.分词和词性标注模型的使用
+####1.3.接口使用示例
+
+新版的THULAC提供了分词和词性标注接口，将`include文件夹`拷贝到自己工程下的`include`中，通过在程序中引用`include"thulac.h"`，即可调用thulac提供的功能。
+
+具体的使用方法可以参考`src/thulac.cc`文件。
+
+####1.4.接口参数
+
+首先需要实例化`THULAC类`，然后可以调用以下接口：
+
+* `int init(const char* model_path = NULL, const char* user_path = NULL, int just_seg = 0, int t2s = 0, int ufilter = 0, char separator = '_');`初始化类，进行自定义设置。
+		
+		user_path           设置用户词典，用户词典中的词会被打上uw标签。词典中每一个词一行，UTF8编码
+		t2s                 默认False, 是否将句子从繁体转化为简体
+		just_seg            默认False, 时候只进行分词，不进行词性标注
+		ufilter             默认False, 是否使用过滤器去除一些没有意义的词语，例如“可以”。
+		model_path          设置模型文件所在文件夹，默认为models/
+		separator           默认为‘_’, 设置词与词性之间的分隔符
+* `int cut(const std::string&, THULAC_result& result);`输入一个待分词和词性标注的字符串和THULAC_result类型变量，结果会存储在`result`中。
+
+	`THULAC_result`类型为`std::vector<std::pair<std::string, std::string> >`的重定义。即`cut函数`返回结果为`std::vector<std::pair<分词,词性> >`。如果只分词，那么词性会是''（空字符串）。
+	
+####1.5.分词和词性标注模型的使用
 
 THULAC需要分词和词性标注模型的支持，用户可以登录[thulac.thunlp.org](http://thulac.thunlp.org)网站填写个人信息进行下载，并放到THULAC的根目录即可，或者使用参数`-model_dir dir`指定模型的位置。
 
