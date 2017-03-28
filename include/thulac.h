@@ -22,7 +22,8 @@ class THULAC {
 public:
 	int init(const char* model_path = NULL, const char* user_path = NULL, int just_seg = 0, int t2s = 0, int ufilter = 0, char separator = '_');
 	void deinit();
-	int cut(const std::string&, THULAC_result&);	
+	int cut(const std::string&, THULAC_result&);
+    std::string toString(const THULAC_result&);
 	THULAC() {
 		user_specified_dict_name=NULL;
 		model_path_char=NULL;
@@ -247,7 +248,9 @@ int THULAC::cut(const std::string &in, THULAC_result& result) {
 	                for(int j = 0; j < tagged.size(); j++) {
 	                	ous.str("");
 						ous << tagged[j].word;
-	                	result.push_back(std::make_pair<std::string, std::string>(ous.str(), tagged[j].tag));
+                        std::string s = tagged[j].tag;
+//                        char * ss = s;
+	                	result.push_back(std::make_pair<std::string, std::string>(ous.str(), s.c_str()));
 	                }
 					
 				}
@@ -268,6 +271,17 @@ int THULAC::cut(const std::string &in, THULAC_result& result) {
 	return 1;
 }
 
+
+std::string THULAC::toString(const THULAC_result& result) {
+    std::string output = "";
+    for(auto i : result) {
+        if(i.first == "\n") continue;
+        if(seg_only) output += i.first + i.second + " ";
+        else output += i.first + char(separator) + i.second + " ";
+    }
+    output.erase(output.size() - 1, 1);
+    return output;
+}
 
 
 #endif
