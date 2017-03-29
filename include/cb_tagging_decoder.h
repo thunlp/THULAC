@@ -340,6 +340,9 @@ void TaggingDecoder::set_label_trans(){//不同位置可能出现的标签种类
 void TaggingDecoder::load_label_trans(char*filename){
     //打开文件
     FILE * pFile=fopen ( filename , "rb" );
+    if(!pFile){
+        fprintf(stderr,"[ERROR] DAT file %s not found\n",filename);
+    }
     /*得到文件大小*/
     int remain_size=0;
     int rtn=fread (&remain_size,sizeof(int),1,pFile);

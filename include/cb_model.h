@@ -81,8 +81,11 @@ public:
     
     BasicModel(const char* filename):ave_ll_weights(NULL),ave_fl_weights(NULL){
         FILE* pFile;
-        int rtn_value;
+        size_t rtn_value;
         pFile=fopen(filename,"rb");
+        if(!pFile){
+            fprintf(stderr,"[ERROR] models path is incorrect, please check the \"models_dir\" parameter or make sure \"models\" is included in your root directory.\n",filename);
+        }
         rtn_value=fread(&(this->l_size),4,1,pFile);
         rtn_value=fread(&(this->f_size),4,1,pFile);
         int l_size=this->l_size;

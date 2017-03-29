@@ -59,6 +59,11 @@ void get_label_info(const char* filename, char** label_info, int** pocs_to_tags)
     char* str=new char[16];
     FILE *fp;
     fp = fopen(filename, "r");
+    if(!fp){
+        fprintf(stderr, "[ERROR] cws_label.txt file not find ", filename);
+        return;
+    }
+    
     int ind=0;
     while( fscanf(fp, "%s", str)==1){
         label_info[ind]=str;
