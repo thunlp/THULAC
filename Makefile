@@ -3,7 +3,7 @@ include_dir=include
 src_dir=src
 bin_dir=.
 test_dir=test
-thulac=g++ -O3 -std=c++11 -march=native -I $(include_dir)
+thulac=g++ -std=c++11 -O3 -march=native -I $(include_dir)
 
 # all: $(bin_dir)/thulac_test $(bin_dir)/train_c $(bin_dir)/thulac
 all: $(bin_dir)/thulac $(bin_dir)/train_c $(bin_dir)/thulac_test
