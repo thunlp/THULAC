@@ -66,7 +66,9 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 * `int cut(const std::string&, THULAC_result& result);`输入一个待分词和词性标注的字符串和THULAC_result类型变量，结果会存储在`result`中。
 
 	`THULAC_result`类型为`std::vector<std::pair<std::string, std::string> >`的重定义。即`cut函数`返回结果为`std::vector<std::pair<分词,词性> >`。如果只分词，那么词性会是''（空字符串）。
-	
+
+* `THULAC_result& multiTreadCut(const std::string &in, THULAC& lac, int thread);`输入一个待分词和词性标注的字符串，一个THULAC实例，线程数，返回THULAC_result类型变量
+
 #### 1.5.分词和词性标注模型的使用
 
 THULAC需要分词和词性标注模型的支持，用户可以登录[thulac.thunlp.org](http://thulac.thunlp.org)网站填写个人信息进行下载，并放到THULAC的根目录即可，或者使用参数`-model_dir dir`指定模型的位置。

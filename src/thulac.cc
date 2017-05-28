@@ -46,6 +46,7 @@ int main (int argc,char **argv) {
     bool useT2S = false;
     bool seg_only = false;
     bool useFilter = false;
+    bool multi_thread = false;
 
     int c = 1;
     while(c < argc){
@@ -66,6 +67,8 @@ int main (int argc,char **argv) {
             input_path = argv[++c];
         }else if(arg == "-output") {
             output_path = argv[++c];
+        }else if(arg == "-multi-thread") {
+            multi_thread = true;
         }else{
             showhelp();
             return 1;

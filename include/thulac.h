@@ -89,7 +89,7 @@ public:
         filter = NULL;
     }
     ~THULAC() {
-        deinit();
+//        deinit();
     }
     
 private:
@@ -189,25 +189,25 @@ int THULAC::init(const char * model_path, const char* user_path, int just_seg, i
 }
 
 void THULAC::deinit() {
-    //    if(*preprocesser != NULL) delete preprocesser;
-    //	delete ns_dict;
-    //	delete idiom_dict;
-    //	if(user_dict != NULL){
-    //		delete user_dict;
-    //	}
-    //
-    //	delete negword;
-    //	delete timeword;
-    //	delete punctuation;
-    //	if(useFilter){
-    //		delete filter;
-    //	}
-    //	if(seg_only) {
-    //		delete cws_decoder;
-    //	}
-    //	else {
-    //		delete tagging_decoder;
-    //	}
+        delete preprocesser;
+    	delete ns_dict;
+    	delete idiom_dict;
+    	if(user_dict != NULL){
+    		delete user_dict;
+    	}
+    
+    	delete negword;
+    	delete timeword;
+    	delete punctuation;
+    	if(useFilter){
+    		delete filter;
+    	}
+    	if(seg_only) {
+    		delete cws_decoder;
+    	}
+    	else {
+    		delete tagging_decoder;
+    	}
 }
 //
 //THULAC THULAC::operator=(THULAC lac) {
@@ -343,7 +343,7 @@ int foo(int a, int b) {
     //    a = b;
     return a+b;
 }
-THULAC_result multiTreadCut(const std::string &in, THULAC& lac, int thread) {
+THULAC_result& multiTreadCut(const std::string &in, THULAC& lac, int thread) {
     std::vector<std::future<THULAC_result>> t;
     THULAC_result output;
     std::vector<std::string> splited = eqSeg(in, thread);
@@ -351,32 +351,16 @@ THULAC_result multiTreadCut(const std::string &in, THULAC& lac, int thread) {
     for(int i=0; i<thread; i++) {
         t.push_back(std::async(&cut, splited[i], lac));
     }
-    //    std::future<THULAC_result> ret = std::async(&cut, in, lac);
     
     std::vector<THULAC_result> each_thread_result;
     for(int i=0; i<thread; i++) {
         THULAC_result current_thread_result = t[i].get();
         output.insert(output.begin(), current_thread_result.begin(), current_thread_result.end());
     }
+//    lac.deinit();
     return output;
+    
 }
-//
-//THULAC_result multiTreadCut(const std::string &in, THULAC& lac, int thread) {
-//    THULAC_result out;
-//    
-//    std::thread t = std::thread(_cut, in, lac, out);
-////    std::thread t2 = std::thread(cut, in, lac);
-////    std::thread t3 = std::thread(cut, in, lac);
-////    std::thread t4 = std::thread(cut, in, lac);
-//
-//    t.join();
-////    t2.join();
-////    t3.join();
-////    t4.join();
-//    return out;
-//}
-
-
 
 
 #endif
