@@ -52,6 +52,10 @@ public:
     int**label_trans_pre;
     int**label_trans_post;
 
+    ///*后处理用*/
+    int threshold;
+    int* allow_com;
+    
     ///*后处理用_ tagging*/
     int tag_size;//postag的个数
     int** label_looking_for;
