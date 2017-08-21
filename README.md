@@ -104,7 +104,7 @@ THULAC需要分词和词性标注模型的支持，用户可以登录[thulac.thu
 将训练出来的模型覆盖原来models中的对应模型，之后执行分词程序即可使用训练出来的模型。
 
 ### 3.获取模型
-获取已经训练好的THULAC模型，请登录[thulac.thunlp.org](http://thulac.thunlp.org)网站填写个人信息进行下载。
+获取已经训练好的THULAC模型，请登录[thulac.thunlp.org](http://thulac.thunlp.org/message_v1_1)网站填写个人信息进行下载。
 
 ## 代表分词软件的性能对比
 我们选择LTP、ICTCLAS、结巴分词等国内代表分词软件与THULAC做性能比较。我们选择Windows作为测试环境，根据第二届国际汉语分词测评发布的国际中文分词测评标准，对不同软件进行了速度和准确率测试。
