@@ -343,7 +343,7 @@ int foo(int a, int b) {
     //    a = b;
     return a+b;
 }
-THULAC_result& multiTreadCut(const std::string &in, THULAC& lac, int thread) {
+THULAC_result multiThreadCut(const std::string &in, THULAC& lac, int thread) {
     std::vector<std::future<THULAC_result>> t;
     THULAC_result output;
     std::vector<std::string> splited = eqSeg(in, thread);
