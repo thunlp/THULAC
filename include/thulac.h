@@ -301,7 +301,7 @@ int THULAC::cut(const std::string &in, THULAC_result& result) const {
         else {
             ous.str("");
             ous << in[startraw];
-            result.push_back(std::make_pair<std::string, std::string>(ous.str(), ""));
+            result.push_back(std::make_pair<std::string, std::string>(ous.str(), "w"));
         }
         startraw++;
     }
