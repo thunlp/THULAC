@@ -177,7 +177,7 @@ private:
     inline void update_weight(int *value_offset,int base,int del,int label,int delta,long steps){
         int ind=dat[base].base+del;
         if(ind>=dat_size||dat[ind].check!=base)return;
-        register int offset=dat[dat[base].base+del].base;
+        int offset=dat[dat[base].base+del].base;
         model->update_fl_weight(offset,label,delta,steps);
         //model->fl_weights[offset*model->l_size+label]+=delta;
     }

@@ -60,7 +60,7 @@ void get_label_info(const char* filename, char** label_info, int** pocs_to_tags)
     FILE *fp;
     fp = fopen(filename, "r");
     if(!fp){
-        fprintf(stderr, "[ERROR] cws_label.txt file not find ", filename);
+        fprintf(stderr, "[ERROR] file %s not find ", filename);
         return;
     }
     
