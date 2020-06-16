@@ -173,6 +173,9 @@ CNKI_journal.txt（51 MB）
 ### THULAC（so版）
 [https://github.com/thunlp/THULAC.so](https://github.com/thunlp/THULAC.so)
 
+### THULAC（Golang版）
+[https://github.com/Tsingxiao/thulacgo](https://github.com/Tsingxiao/thulacgo)
+
 
 ## 历史
 
