@@ -84,7 +84,7 @@ public:
         size_t rtn_value;
         pFile=fopen(filename,"rb");
         if(!pFile){
-            fprintf(stderr,"[ERROR] models path is incorrect, please check the \"models_dir\" parameter or make sure \"models\" is included in your root directory.\n",filename);
+            fprintf(stderr,"[ERROR] models path %s is incorrect, please check the \"models_dir\" parameter or make sure \"models\" is included in your root directory.\n",filename);
         }
         rtn_value=fread(&(this->l_size),4,1,pFile);
         rtn_value=fread(&(this->f_size),4,1,pFile);
